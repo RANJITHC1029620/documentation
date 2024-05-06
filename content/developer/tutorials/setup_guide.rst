@@ -10,8 +10,8 @@ Odoo community and Odoo employees alike, the preferred way is to perform a sourc
    Follow the :ref:`contributing/development/setup` section of the contributing guide to prepare
    your environment for pushing local changes to the Odoo repositories.
 
-Adapt the environment for the tutorials
-=======================================
+Adapt the environment to the tutorials
+======================================
 
 By now, you should have downloaded the source code into two local repositories, one for `odoo/odoo`
 and one for `odoo/enterprise`. These repositories are set up to push changes to pre-defined
@@ -58,10 +58,10 @@ will be part of the `addons-path` that references all directories containing Odo
             $ git remote set-url --push origin you_should_not_push_on_this_repository
 
 That's it! Your environment is now prepared to run Odoo from the sources, and you have successfully
-created a repository to serve as an addons directory. This will allow you to push your work to GitHub.
+created a local repository to serve as an addons directory. This will allow you to push your work to
+GitHub.
 
 .. important::
-
    **For Odoo employees only:**
 
    #. Make sure to read very carefully :ref:`contributing/development/first-contribution`. In particular,
@@ -78,8 +78,8 @@ created a repository to serve as an addons directory. This will allow you to pus
 
    #. At Odoo we use `Runbot <https://runbot.odoo.com>`_ extensively for our :abbr:`CI (Continuous
       Integration)` tests. When you push your changes to **odoo-dev**, Runbot creates a new build
-      and test your code. Once logged in, you will be able to see your branches `Tutorials project
-      <https://runbot.odoo.com/runbot/tutorials-12>`_.
+      and tests your code. Once logged in, you will be able to see your branch on the
+      `Tutorials project <https://runbot.odoo.com/runbot/tutorials-12>`_.
 
 .. note::
 
@@ -101,7 +101,7 @@ interface of the server.
 .. code-block:: console
 
     $ cd $HOME/src/odoo/
-    $ ./odoo-bin --addons-path="addons/,../enterprise/,../tutorials" -d rd-demo
+    $ ./odoo-bin --addons-path="addons/,../enterprise/,../tutorials" -d tutorials
 
 There are multiple :ref:`command-line arguments <reference/cmdline/server>` that you can use to run
 the server. In this training you will only need some of them.
@@ -117,27 +117,15 @@ the server. In this training you will only need some of them.
 
 .. option:: --limit-time-cpu <limit>
 
-   Prevent the worker from using more than <limit> CPU seconds for each request.
+   Prevent the worker from using more than `<limit>` CPU seconds for each request.
 
 .. option:: --limit-time-real <limit>
 
-   Prevent the worker from taking longer than <limit> seconds to process a request.
+   Prevent the worker from taking longer than `<limit>` seconds to process a request.
 
 .. tip::
    - The :option:`--limit-time-cpu` and :option:`--limit-time-real` arguments can be used to prevent
      the worker from being killed when debugging the source code.
-   - | You may face an error similar to `AttributeError: module '<MODULE_NAME>' has no attribute
-       '<$ATTRIBUTE'>`. In this case, you may need to re-install the module with :command:`$ pip
-       install --upgrade --force-reinstall <MODULE_NAME>`.
-     | If this error occurs with more than one module, you may need to re-install all the
-       requirements with :command:`$ pip install --upgrade --force-reinstall -r requirements.txt`.
-     | You can also clear the python cache to solve the issue:
-
-       .. code-block:: console
-
-          $ cd $HOME/.local/lib/python3.8/site-packages/
-          $ find -name '*.pyc' -type f -delete
-
    - Other commonly used arguments are:
 
      - :option:`-i <odoo-bin --init>`: Install some modules before running the server
@@ -145,7 +133,7 @@ the server. In this training you will only need some of them.
        and installing the module from there.
      - :option:`-u <odoo-bin --update>`: Update some modules before running the server
        (comma-separated list). This is equivalent to going to :guilabel:`Apps` in the user interface,
-       selecting a module, and upgrading it from there.
+       selecting a module, and updating it from there.
 
 Log in to Odoo
 --------------
@@ -156,27 +144,24 @@ any other browser with development tools.
 
 To log in as the administrator user, use the following credentials:
 
-- email: `admin`
-- password: `admin`
-
-Enable the developer mode
-=========================
-
-The developer or debug mode is useful for training as it gives access to additional (advanced)
-tools. :ref:`Enable the developer mode <developer-mode>` now. Choose the method that you prefer;
-they are all equivalent.
+- Email: `admin`
+- Password: `admin`
 
 Extra tools
 ===========
+
+Developer mode
+--------------
+
+:ref:`Enable the developer mode <developer-mode>` to get access to developer-oriented tools in the
+interface.
 
 Useful Git commands
 -------------------
 
 Here are some useful Git commands for your day-to-day work.
 
-- | Switch branches:
-  | When you switch branches, both repositories (odoo and enterprise) must be synchronized, i.e.
-    both need to be in the same branch.
+- Switch branches:
 
   .. code-block:: console
 
@@ -185,6 +170,10 @@ Here are some useful Git commands for your day-to-day work.
 
      $ cd $HOME/src/enterprise
      $ git switch {BRANCH}
+
+  .. important::
+     When you switch branches, both repositories (odoo and enterprise) must be synchronized, i.e.
+     both need to be in the same branch.
 
 - Fetch and rebase:
 
@@ -201,32 +190,22 @@ Here are some useful Git commands for your day-to-day work.
 Code Editor
 -----------
 
-If you are working at Odoo, many of your colleagues are using `VSCode
+You are free to choose your code preferred editor. Most Odoo developers use `VSCode
 <https://code.visualstudio.com>`_, `VSCodium <https://vscodium.com>`_ (the open source equivalent),
 `PyCharm <https://www.jetbrains.com/pycharm/download/#section=linux>`_, or `Sublime Text
-<https://www.sublimetext.com>`_. However, you are free to choose your preferred editor.
+<https://www.sublimetext.com>`_.
 
 It is important to configure your linters correctly. Using a linter helps you by showing syntax and
-semantic warnings or errors. Odoo source code tries to respect Python's and JavaScript's standards,
-but some of them can be ignored.
-
-For Python, we use PEP8 with these options ignored:
-
-- `E501`: line too long
-- `E301`: expected 1 blank line, found 0
-- `E302`: expected 2 blank lines, found 1
-
-For JavaScript, we use ESLint and you can find a `configuration file example here
-<https://github.com/odoo/odoo/wiki/Javascript-coding-guidelines#use-a-linter>`_.
+semantic warnings or errors. For JavaScript, we use ESLint and you can find a `configuration file
+example here <https://github.com/odoo/odoo/wiki/Javascript-coding-guidelines#use-a-linter>`_.
 
 Administrator tools for PostgreSQL
 ----------------------------------
 
-You can manage your PostgreSQL databases using the command line as demonstrated earlier or using
-a GUI application such as `pgAdmin <https://www.pgadmin.org/download/pgadmin-4-apt/>`_ or `DBeaver
-<https://dbeaver.io/>`_.
+You can manage your PostgreSQL databases using the command line or a GUI application such as
+`pgAdmin <https://www.pgadmin.org/download/pgadmin-4-apt/>`_ or `DBeaver <https://dbeaver.io/>`_.
 
-To connect the GUI application to your database we recommend you connect using the Unix socket.
+We recommend you connect the GUI application to your database using the Unix socket.
 
 - Host name/address: `/var/run/postgresql`
 - Port: `5432`
@@ -235,20 +214,20 @@ To connect the GUI application to your database we recommend you connect using t
 Python Debugging
 ----------------
 
-When facing a bug or trying to understand how the code works, simply printing things out can go a
-long way, but a proper debugger can save a lot of time.
+When facing a bug or trying to understand how the code works, simply printing things out can help a
+lot, but a proper debugger can save a lot of time.
 
-You can use a classic Python library debugger (`pdb <https://docs.python.org/3/library/pdb.html>`_,
-`pudb <https://pypi.org/project/pudb/>`_ or `ipdb <https://pypi.org/project/ipdb/>`_), or you can
-use your editor's debugger.
+You can use your editor's debugger, or a classic Python library debugger (`pdb
+<https://docs.python.org/3/library/pdb.html>`_, `pudb <https://pypi.org/project/pudb/>`_, or `ipdb
+<https://pypi.org/project/ipdb/>`_).
 
-In the following example we use ipdb, but the process is similar with other libraries.
+In the following example, we use ipdb, but the process is similar to other libraries.
 
 #. Install the library:
 
    .. code-block:: console
 
-      pip install ipdb
+      $ pip install ipdb
 
 #. Place a trigger (breakpoint):
 
